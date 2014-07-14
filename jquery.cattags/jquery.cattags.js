@@ -42,6 +42,7 @@
 							value: v
 						};
 					}
+					if (typeof v === 'undefined' || typeof v.value === 'undefined' || !v.value.trim()) return;
 					v.value = v.value.trim();
 
 					var option = this.options,

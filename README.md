@@ -1,7 +1,13 @@
-jquery.cattags
-==============
+ jquery.cattags
+===========================
 
 jquery标签列表插件，可实现标签的删除、动态添加功能；标签UI配色取自bootstrapt，形式简洁大方；库代码简单轻便，依赖的html也及其简单。总体而言，这是一个轻量级的插件。
+
+---------------------------
+###　　　　　　　　　　　　Author:Van
+###　　　　　　　　　 E-mail:1321907687@qq.com
+
+===========================
 
 <h2> 接口：</h2>
 <dl>
@@ -19,11 +25,11 @@ jquery标签列表插件，可实现标签的删除、动态添加功能；标�
 
 <h2>引用插件：</h2>
 <p>
-	需在页面中添加如下应用：
-	<pre>
+	需在页面中添加如下引用：
+```html
 		<link rel=stylesheet href="jquery.cattags/jquery.cattags.min.css">
 		<script src="jquery.cattags/jquery.cattags.min.js"></script>
-	</pre>
+```
 </p>
 
 <h2> 初始化：</h2>
@@ -31,56 +37,56 @@ jquery标签列表插件，可实现标签的删除、动态添加功能；标�
 <dl>
 	<dt>方式一：</dt>
 	<dl>
-		<pre> 
-			<div class="tag-holder" data-color="default"  data-allow-typing="false"></div>
-			<script>
-			$('.tag-holder').cattags({
-        		data:['标签1','标签2'],
-        		afterAppend:function(){
-        			// 事件处理代码
-        		},
-        		afterRemove:function(){
-        			// 事件处理代码
-        		}
-        	});
-			</script>
-		</pre>
+```html
+	<div class="tag-holder" data-color="default"  data-allow-typing="false"></div>
+	<script>
+	$('.tag-holder').cattags({
+        data:['标签1','标签2'],
+        afterAppend:function(){
+      		// 事件处理代码
+   		},
+   		afterRemove:function(){
+    		// 事件处理代码
+        }
+    });
+	</script>
+```
 	</dl>
 	<dt>方式二：</dt>
 	<dl>
-		<pre> 
-			<div class="tag-holder"></div>
-			<script>
-			$('.tag-holder').cattags({
-				color:'default',
-				allowTyping:'false',
-        		data:['标签1','标签2'],
-        		afterAppend:function(){
-        			// 事件处理代码
-        		},
-        		afterRemove:function(){
-        			// 事件处理代码
-        		}
-        	});
-        	</script>
-        </pre>
+```html
+	<div class="tag-holder"></div>
+	<script>
+	$('.tag-holder').cattags({
+		color:'default',
+		allowTyping:'false',
+        data:['标签1','标签2'],
+        afterAppend:function(){
+        	// 事件处理代码
+        },
+        afterRemove:function(){
+        	// 事件处理代码
+        }
+    });
+    </script>
+```
 	</dl>
 </dl>
 
 <h2>添加标签：</h2>
 <p>
 	在元素初始化后，可使用如下方式添加标签：
-	<pre>
-		 $('.tag-holder').cattags([
-		 	// 添加简单的值
-		 	'标签3',{
-		 		value:'标签n',
-		 		// 任意添加的属性，构成复杂对象
-		 		id:'1',
-		 		data:'v'
-		 	}
-		 ]);
-	</pre>
+```javascript
+	$('.tag-holder').cattags([
+	// 添加简单的值
+	'标签3',{
+		value:'标签n',
+		// 任意添加的属性，构成复杂对象
+		id:'1',
+		data:'v'
+		}
+	]);
+```
 </p>
 
 <h2> ps：</h2>

@@ -15,13 +15,13 @@
 
 <body>
     <div class="tag-holder" data-color="default"></div>
+    <div class="tag-holder" data-color="default"></div>
 
     <script src="jquery.cattags/jquery.min.js"></script>
-    <script src="jquery.cattags/jquery.cattags.js"></script>
+    <script src="jquery.cattags/jquery.cattags.min.js"></script>
     <script>
     $(function() {
         $('.tag-holder').cattags({
-            data: ['fa', 'fwe'],
             afterAppend: function() {
                 console.log(kk = arguments);
             },
@@ -30,10 +30,10 @@
             }
         });
         $('.tag-holder').cattags([
-            '{allowTyping:false}',
-            'fw', {
+             {
                 value: 'abc',
-                id: '1239'
+                id: '1239',
+                data:'fwe'
             }
         ]);
     });
