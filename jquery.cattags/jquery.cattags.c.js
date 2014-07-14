@@ -1,4 +1,31 @@
-!(function($) {
+(function() {
+  var lastTime = 0;
+  var vendors = ['webkit', 'moz','o','ms'];
+  for (var x = 0; x < vendors.length && !window.requestAnimationFrame; ++x) {
+      window.requestAnimationFrame = window[vendors[x] + 'RequestAnimationFrame'];
+      window.cancelAnimationFrame = window[vendors[x] + 'CancelAnimationFrame'] ||
+      window[vendors[x] + 'CancelRequestAnimationFrame'];
+  }
+
+  if (!window.requestAnimationFrame) {
+    window.requestAnimationFrame = function(callback) {
+      var currTime = new Date().getTime();
+      var timeToCall = Math.max(0, 16 - (currTime - lastTime));
+      var id = window.setTimeout(function() {
+          callback(currTime + timeToCall);
+        },
+        timeToCall);
+      lastTime = currTime + timeToCall;
+      return id;
+    };
+  }
+
+  if (!window.cancelAnimationFrame) {
+      window.cancelAnimationFrame = function(id) {
+      clearTimeout(id);
+    };
+  }
+}());;!(function($) {
 	var defaultOption = {
 			listTag: 'ul',
 			listClass: 'tag-list',
@@ -10,7 +37,6 @@
 			afterAppend: null,
 			afterRemove: null
 		},
-		toString = ''.toString,
 		catCache = {},
 		Cattags = (function() {
 			var countOfInstance = 0,
@@ -37,48 +63,63 @@
 					}
 				},
 				addNewItem: function(v, preventEvent) {
-					if (typeof v !== 'string' || !v.trim()) return;
+					if (typeof v === 'undefined') return;
+					if (typeof v === 'string') {
+						v = {
+							value: v
+						};
+					}
+					v.value = v.value.trim();
+
 					var option = this.options,
 						_me = this,
 						tag = $('<' + option.itemTag + ' class="' + option.itemClass + ' " style="display:none">' +
-							'<span>' + v + '</span>' +
+							'<span>' + v.value + '</span>' +
 							'<button type="button" class="tag-close" data-dismiss="' + option.itemClass + '">&times;' +
 							'<span class="sr-only">Close</span>' +
 							'</button>' +
 							'</' + option.itemTag + '>');
-					tag.find('.tag-close').click(function() {
-						_me.removeItem($(this).closest('.' + option.itemClass));
-					});
+
+					// 任意添加的data属性
+					for (var i in v) tag.data(i, v[i]);
 					if (option.allowTyping)
 						this.inputer.before(tag);
 					else
 						this.listTag.append(tag);
+
+					// 动态显示
 					requestAnimationFrame(function() {
 						tag.fadeIn('slow');
+						tag.find('.tag-close').click(function() {
+							_me.removeItem($(this).closest('.' + option.itemClass));
+						});
 					});
 
+					// 触发事件
 					if (!preventEvent && !!option.afterAppend) {
-						var values = [];
-						this.listTag.find(option.itemTag + '.' + option.itemClass + '>span').each(function() {
-							values.push($(this).text())
-						});
+						var values = this.getAllDatas();
 						option.afterAppend.call(this.listTag, tag, v, values);
 					}
 					return tag;
 				},
 				removeItem: function($el) {
 					var option = this.options;
+					if (!!option.afterRemove) {
+						var values = this.getAllDatas();
+						option.afterRemove.call(this.listTag, $el, $el.data(), values);
+					}
 					$el.fadeOut('slow', function() {
 						$(this).remove();
 					});
-
-					if (!!option.afterRemove) {
-						var values = [];
-						this.listTag.find(option.itemTag + '.' + option.itemClass + '>span').each(function() {
-							values.push($el.text())
-						});
-						option.afterRemove.call(this.listTag, $el, $el.find('>span').text(), values);
-					}
+				},
+				// 返回所有数据
+				getAllDatas: function() {
+					var option = this.options,
+						values = [];
+					this.listTag.find(option.itemTag + '.' + option.itemClass).each(function() {
+						values.push($(this).data());
+					});
+					return values;
 				},
 				createTyping: function() {
 					var option = this.options,
@@ -119,7 +160,6 @@
 						data = $me.data(),
 						config = $.extend({}, options, data),
 						tags = new Cattags(config, $me);
-					console.log(config, data);
 					return $me;
 				});
 			}

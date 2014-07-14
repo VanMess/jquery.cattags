@@ -71,7 +71,15 @@ jquery标签列表插件，可实现标签的删除、动态添加功能；标�
 <p>
 	在元素初始化后，可使用如下方式添加标签：
 	<pre>
-		 $('.tag-holder').cattags(['{allowTyping:false}','fw']);
+		 $('.tag-holder').cattags([
+		 	// 添加简单的值
+		 	'标签3',{
+		 		value:'标签n',
+		 		// 任意添加的属性，构成复杂对象
+		 		id:'1',
+		 		data:'v'
+		 	}
+		 ]);
 	</pre>
 </p>
 

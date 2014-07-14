@@ -10,12 +10,12 @@ module.exports = function(grunt) {
             srcPath: pluginPath,
             deployPath: pluginPath,
             deployName: pluginName,
-            banner: '/*\n'+
-                    '*     <%= pkg.name %> - v<%= pkg.version %> - by <%= pkg.authors %> \n' +
-                    '*     <%= grunt.template.today("yyyy-mm-dd") %>\n' +
-                    '*     detail at: <%= pkg.url %>\n' +
-                    '*     Copyright (c) <%= grunt.template.today("yyyy") %> \n'+
-                    '*/\n'
+            banner: '/*\n' +
+                '*     <%= pkg.name %> - v<%= pkg.version %> - by <%= pkg.authors %> \n' +
+                '*     <%= grunt.template.today("yyyy-mm-dd") %>\n' +
+                '*     detail at: <%= pkg.url %>\n' +
+                '*     Copyright (c) <%= grunt.template.today("yyyy") %> \n' +
+                '*/\n'
         },
 
         cssc: {
@@ -55,7 +55,10 @@ module.exports = function(grunt) {
                 separator: ';' //separates scripts 
             },
             dist: {
-                src: ['<%= meta.srcPath %><%= meta.deployName %>.js'],
+                src: [
+                    '<%= meta.srcPath %>requestAnimationFrame.js',
+                    '<%= meta.srcPath %><%= meta.deployName %>.js'
+                ],
                 dest: '<%= meta.deployPath %><%= meta.deployName %>.c.js'
             }
         },
