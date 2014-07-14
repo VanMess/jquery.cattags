@@ -1,0 +1,158 @@
+@charset "UTF-8";
+
+@mixin transition($args...) {
+    -webkit-transition: $args;
+    -moz-transition: $args;
+    -o-transition: $args;
+    -ms-transition: $args;
+    transition: $args;
+}
+
+@mixin transform($args...) {
+    -webkit-transform: $args;
+    -moz-transform: $args;
+    -o-transform: $args;
+    -ms-transform: $args;
+    transform: $args;
+}
+
+@mixin opacity($opacity: 41) {
+    filter: alpha(opacity = $opacity);
+    opacity: $opacity / 100;
+}
+
+%tag-item-struct {
+    display: inline-block;
+    padding: 0.3em 0px  0.3em 0.6em;
+    margin: 0px 0.3em 0.2em 0px;
+    font-weight: 700;
+    &:last-child {
+        margin-right: 0px;
+    }
+}
+
+%anchor-like-style {
+    outline: none;
+    border: none;
+    background: transparent;
+    color: inherit;
+    cursor: pointer;
+}
+
+.tag-list {
+    font-size: 1em;
+    list-style: none;
+    .tag-item {
+        @extend %tag-item-struct;
+        border-radius: 4px;
+        &:hover {
+            .tag-close {
+                @include transform(rotate(360deg));
+                @include opacity(100);
+            }
+        }
+    }
+    .tag-close {
+        display: inline;
+        width: 1.2em;
+        height: 1.2em;
+        line-height: 1.2em;
+        margin: 0px;
+        padding: 0px;
+        font-size: 1.2em;
+        font-weight: 900;
+        text-align: center;
+        @extend %anchor-like-style;
+        @include opacity(82);
+        @include transition(all 0.8s);
+    }
+    .tag-typing {
+        @extend %tag-item-struct;
+        padding: 0px;
+        background: transparent;
+        color: #fff;
+        input[type="text"] {
+            padding: 0.3em 0px  0.3em 0.6em;
+            margin: 0px;
+            border-radius: 4px;
+            @extend %anchor-like-style;
+            @include transition(border-color 0.8s, background 0.8s);
+        }
+    }
+    .sr-only {
+        display: none;
+    }
+}
+
+// 各式颜色样式生成器
+@mixin tag-list-colorful($name, $fg, $bg, $bd, $hv-bg, $hv-bd) {
+    .tag-list.tag-list-#{$name} {
+        .tag-item {
+            border: 1px solid $bd;
+            background: $bg;
+            color: $fg;
+            &:hover {
+                border-color: $hv-bd;
+                background: $hv-bg;
+            }
+        }
+        .tag-typing {
+            input[type="text"] {
+                &:hover,&:focus {
+                    color: $fg;
+                    border-color: $hv-bd;
+                    background: $hv-bg;
+                }
+            }
+        }
+    }
+}
+
+// 灰色样式
+$brand-default-fg: #333333;
+$brand-default-bg: white;
+$brand-default-bd: #cccccc;
+$brand-default-hv-bg: #e6e6e6;
+$brand-default-hv-bd: #adadad;
+@include tag-list-colorful(default, $brand-default-fg, $brand-default-bg, $brand-default-bd, $brand-default-hv-bg, $brand-default-hv-bd);
+
+// 绿色样式
+$brand-success-fg: white;
+$brand-success-bg: #5cb85c;
+$brand-success-bd: #4cae4c;
+$brand-success-hv-bg: #449d44;
+$brand-success-hv-bd: #398439;
+@include tag-list-colorful(success, $brand-success-fg, $brand-success-bg, $brand-success-bd, $brand-success-hv-bg, $brand-success-hv-bd);
+
+// 蓝色
+$brand-primary-fg:#fff;
+$brand-primary-bg: #428bca;
+$brand-primary-bd: #357ebd;
+$brand-primary-hv-bg: #3071a9;
+$brand-primary-hv-bd: #285e8e;
+@include tag-list-colorful(primary, $brand-primary-fg, $brand-primary-bg, $brand-primary-bd, $brand-primary-hv-bg, $brand-primary-hv-bd);
+
+// 浅蓝色
+$brand-info-fg:#fff;
+$brand-info-bg: #5bc0de;
+$brand-info-bd: #46b8da;
+$brand-info-hv-bg: #31b0d5;
+$brand-info-hv-bd: #269abc;
+@include tag-list-colorful(info, $brand-info-fg, $brand-info-bg, $brand-info-bd, $brand-info-hv-bg, $brand-info-hv-bd);
+
+// 黄色
+$brand-warning-fg:#fff;
+$brand-warning-bg: #f0ad4e;
+$brand-warning-bd: #eea236;
+$brand-warning-hv-bg: #ec971f;
+$brand-warning-hv-bd: #d58512;
+@include tag-list-colorful(warning, $brand-warning-fg, $brand-warning-bg, $brand-warning-bd, $brand-warning-hv-bg, $brand-warning-hv-bd);
+
+// 红色
+$brand-danger-fg:#fff;
+$brand-danger-bg: #d9534f;
+$brand-danger-bd: #d43f3a;
+$brand-danger-hv-bg: #c9302c;
+$brand-danger-hv-bd:#ac2925;
+@include tag-list-colorful(danger, $brand-danger-fg, $brand-danger-bg, $brand-danger-bd, $brand-danger-hv-bg, $brand-danger-hv-bd);
+

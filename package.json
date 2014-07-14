@@ -1,0 +1,17 @@
+ {
+ 	"name": "jquery.cattags",
+ 	"description": "实现添加、删除标签的jquery插件",
+ 	"authors":"Van <1321907687@qq.com>",
+ 	"url":"https://github.com/VanMess/jquery.cattags",
+ 	"version": "0.1.0",
+ 	"devDependencies": {
+ 		"grunt": "~0.4.0",
+ 		"grunt-contrib-watch": "*",
+ 		"grunt-contrib-sass": "*",
+ 		"grunt-contrib-cssmin": "*",
+ 		"grunt-cssc": "*",
+ 		"grunt-contrib-jshint": "*",
+ 		"grunt-contrib-uglify": "*",
+ 		"grunt-contrib-concat": "*"
+ 	}
+ }
